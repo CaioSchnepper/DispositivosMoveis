@@ -38,6 +38,7 @@ dependencies:
 
   # Leitor de QR Code para setup inicial do app
   qr_code_scanner: ^1.0.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

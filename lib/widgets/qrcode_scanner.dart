@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QRCodeScanner extends StatefulWidget {
   const QRCodeScanner({super.key});
@@ -41,14 +42,6 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
               onQRViewCreated: _onQRViewCreated,
             ),
           ),
-          Expanded(
-              flex: 1,
-              child: Center(
-                child: (result != null)
-                    ? Text(
-                        'Barcode Type: ${result!.format.name}   Data: ${result!.code}')
-                    : const Text('Scan a code'),
-              )),
           FilledButton(
               child: const Text('Voltar'),
               onPressed: () {
@@ -62,8 +55,22 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
+      setState(() async {
         result = scanData;
+
+        if (scanData.format == BarcodeFormat.qrcode && scanData.code != null) {
+          dando pau aqui
+          // Load and obtain the shared preferences for this app.
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setString('qrCodeData', scanData.code!);
+          Navigator.pop(context);
+        } else {
+          const snackBar = SnackBar(
+            content: Text('QR Code inválido'),
+            duration: Durations.long1,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       });
     });
   }
