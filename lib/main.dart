@@ -1,3 +1,4 @@
+import 'package:dispositivos_moveis/widgets/qrcode_scanner.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,9 +32,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String qrCodeInfo = '';
-
-  void openCamera() {}
+  void navigateToQRCodeScanner() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const QRCodeScanner()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +67,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             FilledButton(
-              onPressed: openCamera,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const QRCodeScanner()),
+                );
+              },
               child: const Text('Abrir câmera'),
             )
           ],
