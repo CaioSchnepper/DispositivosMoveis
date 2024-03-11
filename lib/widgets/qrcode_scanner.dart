@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dispositivos_moveis/models/qrcode_model.dart';
+import 'package:dispositivos_moveis/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -86,10 +87,9 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('QR_CODE_DATA', data);
 
-      Navigator.pop(context);
-
+      navigateToLoginScreen();
+      
     } catch (exception) {
-
       const snackBar = SnackBar(
         content: Text('QR Code inválido'),
         duration: Durations.long1,
@@ -99,6 +99,13 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
 
       qrViewController!.resumeCamera();
     }
+  }
+
+  void navigateToLoginScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
   }
 
   @override
