@@ -1,5 +1,6 @@
 import 'package:dispositivos_moveis/main.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,53 +12,59 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
+      mask: '(###)#####-####',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.eager);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: <Widget>[
         Container(
-          height: 450.0,
-          width: 300.0,
-          padding: EdgeInsets.only(top: 40),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(200),
-          ),
+          height: 400.0,
+          width: 250.0,
+          padding: const EdgeInsets.only(top: 10),
+          // decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(200),
+          // ),
           child: Center(
             child: Image.asset('lib/assets/images/robot-dance.gif'),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.all(10),
-          child: TextField(
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'User Name',
-                hintText: 'Enter valid mail id as abc@gmail.com'),
-          ),
+        Text(
+          'Usuário',
+          style: Theme.of(context).textTheme.labelLarge,
         ),
         Padding(
-          padding: EdgeInsets.all(10),
-          child: TextField(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Informe seu usuário',
+              ),
+              inputFormatters: [maskFormatter]),
+        ),
+        Text(
+          'Senha',
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: TextFormField(
             obscureText: true,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Password',
-                hintText: 'Enter your secure password'),
-          ),
-        ),
-        Container(
-          height: 50,
-          width: 250,
-          child: FilledButton(
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => HomePage()));
-            },
-            child: Text(
-              'Login',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Informa a senha',
             ),
           ),
+        ),
+        FilledButton(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => const HomePage()));
+          },
+          child: const Text('Login'),
         ),
       ]),
     );
