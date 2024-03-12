@@ -17,6 +17,9 @@ class _LoginScreenState extends State<LoginScreen> {
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.eager);
 
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 400.0,
           width: 250.0,
           padding: const EdgeInsets.only(top: 10),
-          // decoration: BoxDecoration(
-          //   borderRadius: BorderRadius.circular(200),
-          // ),
           child: Center(
             child: Image.asset('lib/assets/images/robot-dance.gif'),
           ),
@@ -39,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: TextFormField(
+              controller: userNameController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Informe seu usuário',
@@ -52,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: TextFormField(
+            controller: passwordController,
             obscureText: true,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
@@ -61,12 +63,30 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         FilledButton(
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => const HomePage()));
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  // Retrieve the text that the user has entered by using the
+                  // TextEditingController.
+                  content: Text(userNameController.text),
+                );
+              },
+            );
+            // Navigator.push(
+            //     context, MaterialPageRoute(builder: (_) => const HomePage()));
           },
           child: const Text('Login'),
         ),
       ]),
     );
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    userNameController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }
