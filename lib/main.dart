@@ -1,4 +1,4 @@
-import 'package:dispositivos_moveis/widgets/qrcode_scanner.dart';
+import 'package:dispositivos_moveis/screens/qrcode_scanner_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

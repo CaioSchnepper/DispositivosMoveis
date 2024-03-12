@@ -1,4 +1,5 @@
 import 'package:dispositivos_moveis/main.dart';
+import 'package:dispositivos_moveis/services/login_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -17,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.eager);
 
-  final userNameController = TextEditingController();
+  final userController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
@@ -39,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: TextFormField(
-              controller: userNameController,
+              controller: userController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Informe seu usuário',
@@ -63,16 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         FilledButton(
           onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  // Retrieve the text that the user has entered by using the
-                  // TextEditingController.
-                  content: Text(userNameController.text),
-                );
-              },
-            );
+            _login();
             // Navigator.push(
             //     context, MaterialPageRoute(builder: (_) => const HomePage()));
           },
@@ -82,10 +74,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Future<void> _login() async {
+    var login = await LoginService.login(userController.text, passwordController.text);
+
+    var a = true;
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    userNameController.dispose();
+    userController.dispose();
     passwordController.dispose();
     super.dispose();
   }
