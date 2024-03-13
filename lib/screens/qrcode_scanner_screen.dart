@@ -7,18 +7,17 @@ import 'package:dispositivos_moveis/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class QRCodeScanner extends StatefulWidget {
-  const QRCodeScanner({super.key});
+class QRCodeScannerScreen extends StatefulWidget {
+  const QRCodeScannerScreen({super.key});
 
   final String title = 'Title';
 
   @override
-  State<QRCodeScanner> createState() => _QRCodeScannerState();
+  State<QRCodeScannerScreen> createState() => _QRCodeScannerScreenState();
 }
 
-class _QRCodeScannerState extends State<QRCodeScanner> {
+class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? qrCodeData;
   QRViewController? qrViewController;
@@ -71,11 +70,11 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
         qrCodeData = scanData;
       });
 
-      handleQRCode(scanData.code!);
+      _handleQRCode(scanData.code!);
     });
   }
 
-  void handleQRCode(String data) async {
+  void _handleQRCode(String data) async {
     try {
       final qrCodeDataJson = jsonDecode(data) as Map<String, dynamic>;
 
@@ -87,7 +86,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
       // Load and obtain the shared preferences for this app.
       await StorageService.saveQRCodeData(data);
 
-      navigateToLoginScreen();
+      _navigateToLoginScreen();
       
     } catch (exception) {
       const snackBar = SnackBar(
@@ -101,7 +100,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
     }
   }
 
-  void navigateToLoginScreen() {
+  void _navigateToLoginScreen() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const LoginScreen()),

@@ -1,4 +1,9 @@
+import 'package:dispositivos_moveis/models/login_model.dart';
+import 'package:dispositivos_moveis/models/qrcode_model.dart';
+import 'package:dispositivos_moveis/screens/login_screen.dart';
+import 'package:dispositivos_moveis/screens/patrimony_screen.dart';
 import 'package:dispositivos_moveis/screens/qrcode_scanner_screen.dart';
+import 'package:dispositivos_moveis/services/storage_service.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -6,7 +11,6 @@ void main() {
 }
 
 class MainApp extends StatelessWidget {
-
   const MainApp({super.key});
 
   // This widget is the root of your application.
@@ -30,11 +34,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void navigateToQRCodeScanner() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const QRCodeScanner()),
-    );
+  @override
+  void initState() {
+    super.initState();
+    _checkSavedData();
+  }
+
+  _checkSavedData() async {
+    LoginResponseModel? loginData = await StorageService.getLoginData();
+    if (loginData != null) {
+      _navigateToPatrimonyScreen();
+    }
+
+    QRCodeModel? qrCodeData = await StorageService.getQRCodeData();
+
+    if (qrCodeData != null) {
+      _navigateToLoginScreen();
+    }
   }
 
   @override
@@ -65,18 +81,33 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             FilledButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const QRCodeScanner()),
-                );
-              },
+              onPressed: _navigateToQRCodeScanner,
               child: const Text('Abrir câmera'),
             )
           ],
         ),
       ),
+    );
+  }
+
+  void _navigateToQRCodeScanner() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const QRCodeScannerScreen()),
+    );
+  }
+
+  void _navigateToLoginScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
+  }
+
+  void _navigateToPatrimonyScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const PatrimonyScreen()),
     );
   }
 }

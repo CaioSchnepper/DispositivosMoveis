@@ -1,3 +1,6 @@
+import 'package:dispositivos_moveis/models/permissions_model.dart';
+import 'package:uuid/uuid.dart';
+
 class LoginModel {
   final String applicationId;
   final String celular;
@@ -13,15 +16,30 @@ class LoginModel {
 }
 
 class LoginResponseModel {
-  // "accessToken": "string",
-  // "changePassword": true,
-  // "expireAt": "2024-03-12T03:02:43.562Z",
-  // "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  // "permissions": {
-  //   "additionalProp1": true,
-  //   "additionalProp2": true,
-  //   "additionalProp3": true
-  // },
-  // "phoneNumber": "string",
-  // "refreshToken": "string"
+  String accessToken;
+  bool changePassword;
+  DateTime expireAt;
+  Uuid id;
+  Permission permissions;
+  String phoneNumber;
+  String refreshToken;
+
+  LoginResponseModel.fromJson(Map<String, dynamic> json)
+      : accessToken = json['accessToken'],
+        changePassword = json['changePassword'],
+        expireAt = json['expireAt'],
+        id = json['id'],
+        permissions = json['permissions'],
+        phoneNumber = json['phoneNumber'],
+        refreshToken = json['refreshToken'];
+
+  Map<String, dynamic> toJson() => {
+        'accessToken': accessToken,
+        'changePassword': changePassword,
+        'expireAt': expireAt,
+        'id': id,
+        'permissions': permissions,
+        'phoneNumber': phoneNumber,
+        'refreshToken': refreshToken
+      };
 }

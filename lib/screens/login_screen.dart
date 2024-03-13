@@ -1,5 +1,7 @@
-import 'package:dispositivos_moveis/main.dart';
+import 'package:dispositivos_moveis/models/login_model.dart';
+import 'package:dispositivos_moveis/screens/patrimony_screen.dart';
 import 'package:dispositivos_moveis/services/login_service.dart';
+import 'package:dispositivos_moveis/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -75,9 +77,17 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async {
-    var login = await LoginService.login(userController.text, passwordController.text);
+    LoginResponseModel login =
+        await LoginService.login(userController.text, passwordController.text);
+    StorageService.saveLoginData(login);
+    _navigateToPatrimonyScreen();
+  }
 
-    var a = true;
+  _navigateToPatrimonyScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const PatrimonyScreen()),
+    );
   }
 
   @override

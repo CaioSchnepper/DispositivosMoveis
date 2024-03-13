@@ -2,35 +2,38 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dispositivos_moveis/models/login_model.dart';
+import 'package:dispositivos_moveis/models/patrimony_model.dart';
 import 'package:dispositivos_moveis/models/qrcode_model.dart';
 import 'package:dispositivos_moveis/services/storage_service.dart';
 import 'package:http/http.dart' as http;
 
-class LoginService {
+class PatrimonyService {
   static const String baseUrl = 'api/iris-security';
 
-  static Future<LoginResponseModel> login(String user, String password) async {
+  static Future<PatrimonyModel> fetchPatrimonies() async {
     final QRCodeModel? qrCodeData = await StorageService.getQRCodeData();
     if (qrCodeData != null) {
       throw Exception('Erro ao ler os dados do QR Code');
     }
 
-    final LoginModel loginModel =
-        LoginModel(applicationId: '', celular: user, senha: password);
+    final LoginResponseModel? loginData = await StorageService.getLoginData();
+    if (loginData != null) {
+      throw Exception('Erro ao ler os dados do login');
+    }
 
-    final response = await http.post(
-        Uri.parse('${qrCodeData!.url}/$baseUrl/login'),
+    final response = await http.get(
+        Uri.parse('${qrCodeData!.url}/$baseUrl/patrimonios'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'TenantId': qrCodeData.tenantId
-        },
-        body: jsonEncode(loginModel.toJson()));
+          'TenantId': qrCodeData.tenantId,
+          'Authorization': 'Bearer ${loginData!.accessToken}'
+        });
 
     if (response.statusCode == HttpStatus.ok) {
-      return LoginResponseModel.fromJson(
+      return PatrimonyModel.fromJson(
           jsonDecode(response.body) as Map<String, dynamic>);
     } else {
-      throw Exception('Erro ao realizar login');
+      throw Exception('Erro ao buscar patrimônios');
     }
   }
 }
