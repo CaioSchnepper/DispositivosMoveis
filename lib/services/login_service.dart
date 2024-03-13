@@ -11,7 +11,7 @@ class LoginService {
 
   static Future<LoginResponseModel> login(String user, String password) async {
     final QRCodeModel? qrCodeData = await StorageService.getQRCodeData();
-    if (qrCodeData != null) {
+    if (qrCodeData == null) {
       throw Exception('Erro ao ler os dados do QR Code');
     }
 

@@ -8,7 +8,7 @@ class PatrimonyModel {
   Permission config;
 
   PatrimonyModel.fromJson(Map<String, dynamic> json)
-      : clientes = jsonDecode(json['clientes'])
+      : clientes = (jsonDecode(json['clientes']) as List)
             .map((cliente) => ClienteModel.fromJson(cliente))
             .toList(),
         config = json['config'];

@@ -22,8 +22,16 @@ class _PatrimonyScreenState extends State<PatrimonyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(children: <Widget>[]),
+    return Scaffold(
+      body: Column(children: <Widget>[
+        Column(
+          children: <Widget>[
+            Text(_patrimonies == null
+                ? "Nenhum patrimônio encontrado"
+                : _patrimonies!.clientes.first.nome)
+          ],
+        )
+      ]),
     );
   }
 
