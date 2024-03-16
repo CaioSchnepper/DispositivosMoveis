@@ -1,9 +1,9 @@
-import 'package:dispositivos_moveis/models/login_model.dart';
-import 'package:dispositivos_moveis/models/qrcode_model.dart';
-import 'package:dispositivos_moveis/screens/login_screen.dart';
-import 'package:dispositivos_moveis/screens/patrimony_screen.dart';
-import 'package:dispositivos_moveis/screens/qrcode_scanner_screen.dart';
-import 'package:dispositivos_moveis/services/storage_service.dart';
+import 'package:app_do_portao/models/login_model.dart';
+import 'package:app_do_portao/models/qrcode_model.dart';
+import 'package:app_do_portao/screens/login_screen.dart';
+import 'package:app_do_portao/screens/patrimony_screen.dart';
+import 'package:app_do_portao/screens/qrcode_scanner_screen.dart';
+import 'package:app_do_portao/services/storage_service.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,7 +25,7 @@ class MainApp extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       home: const HomePage(),
     );
   }
@@ -61,10 +61,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      //   title: Text(widget.title),
-      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -80,7 +76,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                'Por favor, clique no botão abaixo e escaneie o QR Code fornecido para ter acesso ao Iris Security',
+                'Por favor, pressione o botão abaixo e escaneie o QR Code fornecido para ter acesso ao App do portão',
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:dispositivos_moveis/models/login_model.dart';
-import 'package:dispositivos_moveis/models/qrcode_model.dart';
+import 'package:app_do_portao/models/login_model.dart';
+import 'package:app_do_portao/models/qrcode_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageService {

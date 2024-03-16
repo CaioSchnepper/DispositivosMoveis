@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dispositivos_moveis/models/login_model.dart';
-import 'package:dispositivos_moveis/models/patrimony_model.dart';
-import 'package:dispositivos_moveis/models/qrcode_model.dart';
-import 'package:dispositivos_moveis/services/storage_service.dart';
+import 'package:app_do_portao/models/login_model.dart';
+import 'package:app_do_portao/models/patrimony_model.dart';
+import 'package:app_do_portao/models/qrcode_model.dart';
+import 'package:app_do_portao/services/storage_service.dart';
 import 'package:http/http.dart' as http;
 
 class PatrimonyService {

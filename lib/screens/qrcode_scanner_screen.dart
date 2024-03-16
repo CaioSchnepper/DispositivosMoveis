@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dispositivos_moveis/models/qrcode_model.dart';
-import 'package:dispositivos_moveis/screens/login_screen.dart';
-import 'package:dispositivos_moveis/services/storage_service.dart';
+import 'package:app_do_portao/models/qrcode_model.dart';
+import 'package:app_do_portao/screens/login_screen.dart';
+import 'package:app_do_portao/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';

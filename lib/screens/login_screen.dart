@@ -1,7 +1,7 @@
-import 'package:dispositivos_moveis/models/login_model.dart';
-import 'package:dispositivos_moveis/screens/patrimony_screen.dart';
-import 'package:dispositivos_moveis/services/login_service.dart';
-import 'package:dispositivos_moveis/services/storage_service.dart';
+import 'package:app_do_portao/models/login_model.dart';
+import 'package:app_do_portao/screens/patrimony_screen.dart';
+import 'package:app_do_portao/services/login_service.dart';
+import 'package:app_do_portao/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -77,10 +77,18 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async {
-    LoginResponseModel login =
-        await LoginService.login(userController.text, passwordController.text);
-    StorageService.saveLoginData(login);
-    _navigateToPatrimonyScreen();
+    try {
+      LoginResponseModel login = await LoginService.login(
+          userController.text, passwordController.text);
+      StorageService.saveLoginData(login);
+      _navigateToPatrimonyScreen();
+    } catch (exception) {
+      const snackBar = SnackBar(
+        content: Text('Erro ao realizar login. O que aconteceu nós nunca saberemos.'),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   _navigateToPatrimonyScreen() {

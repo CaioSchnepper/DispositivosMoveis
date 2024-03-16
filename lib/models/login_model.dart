@@ -1,4 +1,4 @@
-import 'package:dispositivos_moveis/models/permissions_model.dart';
+import 'package:app_do_portao/models/permissions_model.dart';
 
 class LoginModel {
   final String applicationId;

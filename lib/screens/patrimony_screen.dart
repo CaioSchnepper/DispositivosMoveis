@@ -1,8 +1,5 @@
-import 'dart:ffi';
-import 'dart:ui';
-
-import 'package:dispositivos_moveis/models/patrimony_model.dart';
-import 'package:dispositivos_moveis/services/patrimony_service.dart';
+import 'package:app_do_portao/models/patrimony_model.dart';
+import 'package:app_do_portao/services/patrimony_service.dart';
 import 'package:flutter/material.dart';
 
 class PatrimonyScreen extends StatefulWidget {
