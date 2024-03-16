@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:ui';
+
 import 'package:dispositivos_moveis/models/patrimony_model.dart';
 import 'package:dispositivos_moveis/services/patrimony_service.dart';
 import 'package:flutter/material.dart';
@@ -23,23 +26,48 @@ class _PatrimonyScreenState extends State<PatrimonyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: <Widget>[
-        Column(
-          children: <Widget>[
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  for (var cliente in _patrimonies.clientes)
-                    Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text(cliente.nome)),
-                ],
-              ),
+      body: Column(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 50),
+            child: Center(
+              child: Image.asset('lib/assets/images/patrimonio.gif'),
             ),
-          ],
-        )
-      ]),
+          ),
+          Center(
+            child: Column(
+              children: <Widget>[
+                for (var cliente in _patrimonies.clientes)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    margin: const EdgeInsets.symmetric(vertical: 2),
+                    child: Card(
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.location_city,
+                          size: 40,
+                          color: cliente.armado ? Colors.red : Colors.green,
+                        ),
+                        title: Text(cliente.nome),
+                        subtitle: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('${cliente.cliente1} - ${cliente.particao}'),
+                            Text(cliente.armado ? 'Armado' : 'Desarmado',
+                                style: TextStyle(
+                                    color: cliente.armado
+                                        ? Colors.red
+                                        : Colors.green))
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
