@@ -12,12 +12,12 @@ class PatrimonyScreen extends StatefulWidget {
 }
 
 class _PatrimonyScreenState extends State<PatrimonyScreen> {
-  PatrimonyModel? _patrimonies;
+  PatrimonyModel _patrimonies = PatrimonyModel();
 
   @override
   void initState() {
-    super.initState();
     _fetchPatrimonies();
+    super.initState();
   }
 
   @override
@@ -26,9 +26,17 @@ class _PatrimonyScreenState extends State<PatrimonyScreen> {
       body: Column(children: <Widget>[
         Column(
           children: <Widget>[
-            Text(_patrimonies == null
-                ? "Nenhum patrimônio encontrado"
-                : _patrimonies!.clientes.first.nome)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  for (var cliente in _patrimonies.clientes)
+                    Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Text(cliente.nome)),
+                ],
+              ),
+            ),
           ],
         )
       ]),

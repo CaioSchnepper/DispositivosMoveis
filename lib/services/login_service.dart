@@ -19,7 +19,7 @@ class LoginService {
         LoginModel(applicationId: '', celular: user, senha: password);
 
     final response = await http.post(
-        Uri.parse('${qrCodeData!.url}/$baseUrl/login'),
+        Uri.parse('${qrCodeData.url}/$baseUrl/login'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'TenantId': qrCodeData.tenantId

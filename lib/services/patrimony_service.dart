@@ -22,11 +22,11 @@ class PatrimonyService {
     }
 
     final response = await http.get(
-        Uri.parse('${qrCodeData!.url}/$baseUrl/patrimonios'),
+        Uri.parse('${qrCodeData.url}/$baseUrl/patrimonios'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'TenantId': qrCodeData.tenantId,
-          'Authorization': 'Bearer ${loginData!.accessToken}'
+          'Authorization': 'Bearer ${loginData.accessToken}'
         });
 
     if (response.statusCode == HttpStatus.ok) {

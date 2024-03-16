@@ -1,17 +1,16 @@
-import 'dart:convert';
-import 'dart:ffi';
-
-import 'package:dispositivos_moveis/models/permissions_model.dart';
-
 class PatrimonyModel {
-  List<ClienteModel> clientes;
-  Permission config;
+  List<ClienteModel> clientes = List.empty();
+  //Permission config;
+
+  PatrimonyModel();
 
   PatrimonyModel.fromJson(Map<String, dynamic> json)
-      : clientes = (jsonDecode(json['clientes']) as List)
-            .map((cliente) => ClienteModel.fromJson(cliente))
-            .toList(),
-        config = json['config'];
+      : clientes = toClientModelList(json['clientes']);
+  //config = json['config'];
+
+  static List<ClienteModel> toClientModelList(List<dynamic> list) {
+    return list.map((cliente) => ClienteModel.fromJson(cliente)).toList();
+  }
 }
 
 class ClienteModel {
@@ -20,10 +19,10 @@ class ClienteModel {
   bool hasVideoServer;
   int idUnico;
   String nome;
-  String parceira;
+  String? parceira;
   String particao;
-  Long posX;
-  Long posY;
+  double posX;
+  double posY;
 
   ClienteModel.fromJson(Map<String, dynamic> json)
       : armado = json['armado'],
