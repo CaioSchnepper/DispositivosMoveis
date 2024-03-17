@@ -42,3 +42,13 @@ class LoginResponseModel {
         'refreshToken': refreshToken
       };
 }
+
+class RefreshTokenModel {
+  String keyAccessId;
+  String refreshToken;
+
+  RefreshTokenModel(this.keyAccessId, this.refreshToken);
+
+  Map<String, dynamic> toJson() =>
+      {'keyAccessId': keyAccessId, 'refreshToken': refreshToken};
+}

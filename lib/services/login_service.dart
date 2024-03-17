@@ -1,29 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app_do_portao/models/login_model.dart';
-import 'package:app_do_portao/models/qrcode_model.dart';
 import 'package:app_do_portao/services/storage_service.dart';
-import 'package:http/http.dart' as http;
+import 'package:app_do_portao/utils/constants/api_constants.dart';
+import 'package:app_do_portao/utils/http/http_interceptor.dart';
+import 'package:app_do_portao/models/login_model.dart';
 
 class LoginService {
-  static const String baseUrl = 'api/iris-security';
-
   static Future<LoginResponseModel> login(String user, String password) async {
-    final QRCodeModel? qrCodeData = await StorageService.getQRCodeData();
-    if (qrCodeData == null) {
-      throw Exception('Erro ao ler os dados do QR Code');
-    }
-
     final LoginModel loginModel =
         LoginModel(applicationId: '', celular: user, senha: password);
 
-    final response = await http.post(
-        Uri.parse('${qrCodeData.url}/$baseUrl/login'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'TenantId': qrCodeData.tenantId
-        },
+    final response = await HttpInterceptor.client.post(
+        Uri.parse(
+            '${StorageService.getApiUrl()}/${ApiConstants.baseUrl}/login'),
         body: jsonEncode(loginModel.toJson()));
 
     if (response.statusCode == HttpStatus.ok) {

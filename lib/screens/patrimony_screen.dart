@@ -1,4 +1,5 @@
 import 'package:app_do_portao/models/patrimony_model.dart';
+import 'package:app_do_portao/screens/command_screen.dart';
 import 'package:app_do_portao/services/patrimony_service.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,7 @@ class _PatrimonyScreenState extends State<PatrimonyScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     margin: const EdgeInsets.symmetric(vertical: 2),
                     child: Card(
+                      onPressed: _navigateToCommands(cliente)
                       child: ListTile(
                         leading: Icon(
                           Icons.location_city,
@@ -74,5 +76,12 @@ class _PatrimonyScreenState extends State<PatrimonyScreen> {
     setState(() {
       _patrimonies = patrimonies;
     });
+  }
+
+  void _navigateToCommands(ClienteModel cliente) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CommandScreen(cliente)),
+    );
   }
 }
