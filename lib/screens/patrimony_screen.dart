@@ -40,8 +40,8 @@ class _PatrimonyScreenState extends State<PatrimonyScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     margin: const EdgeInsets.symmetric(vertical: 2),
                     child: Card(
-                      onPressed: _navigateToCommands(cliente)
                       child: ListTile(
+                        onTap: () => _navigateToCommands(cliente),
                         leading: Icon(
                           Icons.location_city,
                           size: 40,
@@ -81,7 +81,7 @@ class _PatrimonyScreenState extends State<PatrimonyScreen> {
   void _navigateToCommands(ClienteModel cliente) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const CommandScreen(cliente)),
+      MaterialPageRoute(builder: (context) => CommandScreen(cliente)),
     );
   }
 }

@@ -8,8 +8,10 @@ import 'package:app_do_portao/utils/http/http_interceptor.dart';
 
 class PatrimonyService {
   static Future<PatrimonyModel> fetchPatrimonies() async {
-    final response = await HttpInterceptor.client.get(Uri.parse(
-        '${StorageService.getApiUrl()}/${ApiConstants.baseUrl}/patrimonios'));
+    String? apiUrl = await StorageService.getApiUrl();
+
+    final response = await HttpInterceptor.client
+        .get(Uri.parse('$apiUrl/${ApiConstants.baseUrl}/patrimonios'));
 
     if (response.statusCode == HttpStatus.ok) {
       return PatrimonyModel.fromJson(

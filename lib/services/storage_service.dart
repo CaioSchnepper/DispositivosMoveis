@@ -8,22 +8,16 @@ final class StorageService {
   static const String _qrCodeDataKey = 'QR_CODE_DATA';
   static const String _loginDataKey = 'LOGIN_DATA';
 
-  static SharedPreferences? preferencesInstance;
-
-  StorageService() {
-    _createInstance();
-  }
-
-  Future<void> _createInstance() async {
-    preferencesInstance = await SharedPreferences.getInstance();
-  }
-
   static Future<void> saveQRCodeData(String data) async {
-    preferencesInstance!.setString(_qrCodeDataKey, data);
+    SharedPreferences preferencesInstance =
+        await SharedPreferences.getInstance();
+    preferencesInstance.setString(_qrCodeDataKey, data);
   }
 
   static Future<QRCodeModel?> getQRCodeData() async {
-    final qrCodeData = preferencesInstance!.getString(_qrCodeDataKey);
+    SharedPreferences preferencesInstance =
+        await SharedPreferences.getInstance();
+    final qrCodeData = preferencesInstance.getString(_qrCodeDataKey);
 
     return qrCodeData != null
         ? QRCodeModel.fromJson(jsonDecode(qrCodeData))
@@ -31,11 +25,15 @@ final class StorageService {
   }
 
   static Future<void> saveLoginData(LoginResponseModel data) async {
-    preferencesInstance!.setString(_loginDataKey, jsonEncode(data.toJson()));
+    SharedPreferences preferencesInstance =
+        await SharedPreferences.getInstance();
+    preferencesInstance.setString(_loginDataKey, jsonEncode(data.toJson()));
   }
 
   static Future<LoginResponseModel?> getLoginData() async {
-    final loginData = preferencesInstance!.getString(_loginDataKey);
+    SharedPreferences preferencesInstance =
+        await SharedPreferences.getInstance();
+    final loginData = preferencesInstance.getString(_loginDataKey);
 
     return loginData != null
         ? LoginResponseModel.fromJson(jsonDecode(loginData))

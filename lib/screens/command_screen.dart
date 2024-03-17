@@ -2,7 +2,7 @@ import 'package:app_do_portao/models/patrimony_model.dart';
 import 'package:flutter/material.dart';
 
 class CommandScreen extends StatefulWidget {
-  const CommandScreen({super.key, required ClienteModel cliente});
+  const CommandScreen(ClienteModel cliente, {super.key});
 
   final String title = 'Login';
 
@@ -34,26 +34,26 @@ class _CommandScreenState extends State<CommandScreen> {
             child: Column(
               children: <Widget>[
                 //for (var cliente in _patrimonies.clientes)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    margin: const EdgeInsets.symmetric(vertical: 2),
-                    child: const Card(
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.location_city,
-                          size: 40,
-                          //color: cliente.armado ? Colors.red : Colors.green,
-                        ),
-                        title: Text(''),
-                        subtitle: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(''),
-                          ],
-                        ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  margin: const EdgeInsets.symmetric(vertical: 2),
+                  child: const Card(
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.location_city,
+                        size: 40,
+                        //color: cliente.armado ? Colors.red : Colors.green,
+                      ),
+                      title: Text(''),
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(''),
+                        ],
                       ),
                     ),
                   ),
+                ),
               ],
             ),
           ),
@@ -66,7 +66,7 @@ class _CommandScreenState extends State<CommandScreen> {
     //PatrimonyModel patrimonies = await PatrimonyService.fetchPatrimonies();
 
     setState(() {
-     // _patrimonies = patrimonies;
+      // _patrimonies = patrimonies;
     });
   }
 }

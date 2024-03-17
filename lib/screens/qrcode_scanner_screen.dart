@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:app_do_portao/models/qrcode_model.dart';
 import 'package:app_do_portao/screens/login_screen.dart';
 import 'package:app_do_portao/services/storage_service.dart';
+import 'package:app_do_portao/utils/helpers/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -87,15 +88,8 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       await StorageService.saveQRCodeData(data);
 
       _navigateToLoginScreen();
-      
     } catch (exception) {
-      const snackBar = SnackBar(
-        content: Text('QR Code inválido'),
-        duration: Durations.long1,
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+      _showSnackBar('QR Code inválido');
       qrViewController!.resumeCamera();
     }
   }
@@ -105,6 +99,10 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       context,
       MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
+  }
+
+  void _showSnackBar(String text) {
+    SnackBarHelper.show(context, text);
   }
 
   @override
