@@ -1,4 +1,5 @@
 import 'package:app_do_portao/models/permissions_model.dart';
+import 'package:uuid/uuid.dart';
 
 class LoginModel {
   final String applicationId;
@@ -16,11 +17,11 @@ class LoginModel {
 
 class LoginResponseModel {
   String accessToken;
-  bool changePassword;
+  bool? changePassword;
   DateTime expireAt;
-  String id;
+  String? id;
   Permission? permissions;
-  String phoneNumber;
+  String? phoneNumber;
   String refreshToken;
 
   LoginResponseModel.fromJson(Map<String, dynamic> json)

@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:app_do_portao/repositories/storage_service.dart';
 import 'package:app_do_portao/utils/constants/api_constants.dart';
-import 'package:app_do_portao/utils/http/http_interceptor.dart';
 import 'package:app_do_portao/models/login_model.dart';
+import 'package:app_do_portao/utils/helpers/http_helper.dart';
 
 class LoginService {
   static Future<LoginResponseModel> login(String user, String password) async {
@@ -13,7 +13,7 @@ class LoginService {
     final LoginModel loginModel =
         LoginModel(applicationId: '', celular: user, senha: password);
 
-    final response = await HttpInterceptor.client.post(
+    final response = await HttpHelper.client.post(
         Uri.parse('$apiUrl/${ApiConstants.baseUrl}/login'),
         body: jsonEncode(loginModel.toJson()));
 

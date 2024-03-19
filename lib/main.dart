@@ -49,12 +49,14 @@ class _HomePageState extends State<HomePage> {
     LoginResponseModel? loginData = await StorageService.getLoginData();
     if (loginData != null) {
       _navigateToPatrimonyScreen();
+      return;
     }
 
     QRCodeModel? qrCodeData = await StorageService.getQRCodeData();
 
     if (qrCodeData != null) {
       _navigateToLoginScreen();
+      return;
     }
   }
 
