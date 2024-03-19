@@ -1,7 +1,7 @@
 import 'package:app_do_portao/models/login_model.dart';
 import 'package:app_do_portao/screens/patrimony_screen.dart';
 import 'package:app_do_portao/services/login_service.dart';
-import 'package:app_do_portao/services/storage_service.dart';
+import 'package:app_do_portao/repositories/storage_service.dart';
 import 'package:app_do_portao/utils/helpers/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -68,8 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
         FilledButton(
           onPressed: () {
             _login();
-            // Navigator.push(
-            //     context, MaterialPageRoute(builder: (_) => const HomePage()));
           },
           child: const Text('Login'),
         ),

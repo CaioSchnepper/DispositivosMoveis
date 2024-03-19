@@ -3,7 +3,7 @@ import 'package:app_do_portao/models/qrcode_model.dart';
 import 'package:app_do_portao/screens/login_screen.dart';
 import 'package:app_do_portao/screens/patrimony_screen.dart';
 import 'package:app_do_portao/screens/qrcode_scanner_screen.dart';
-import 'package:app_do_portao/services/storage_service.dart';
+import 'package:app_do_portao/repositories/storage_service.dart';
 import 'package:flutter/material.dart';
 
 void main() {

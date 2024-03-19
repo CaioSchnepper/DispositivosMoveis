@@ -81,7 +81,7 @@ class _PatrimonyScreenState extends State<PatrimonyScreen> {
   void _navigateToCommands(ClienteModel cliente) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CommandScreen(cliente)),
+      MaterialPageRoute(builder: (context) => CommandScreen(cliente: cliente)),
     );
   }
 }

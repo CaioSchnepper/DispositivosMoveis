@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_do_portao/models/login_model.dart';
-import 'package:app_do_portao/services/storage_service.dart';
+import 'package:app_do_portao/repositories/storage_service.dart';
 import 'package:app_do_portao/utils/constants/api_constants.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 
@@ -47,7 +47,7 @@ class HttpInterceptor extends RetryPolicy implements InterceptorContract {
 
   @override
   Future<bool> shouldInterceptResponse() {
-    return Future.sync(() => false);
+    return Future.sync(() => true);
   }
 
   @override

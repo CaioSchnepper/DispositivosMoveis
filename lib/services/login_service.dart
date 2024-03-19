@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app_do_portao/services/storage_service.dart';
+import 'package:app_do_portao/repositories/storage_service.dart';
 import 'package:app_do_portao/utils/constants/api_constants.dart';
 import 'package:app_do_portao/utils/http/http_interceptor.dart';
 import 'package:app_do_portao/models/login_model.dart';
