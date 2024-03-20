@@ -35,26 +35,22 @@ class ExpiredTokenRetryPolicy extends RetryPolicy {
     final RefreshTokenModel refreshTokenModel =
         RefreshTokenModel(const Uuid().v4(), refreshToken!);
 
-    try {
-      final response = await http.post(
-          Uri.parse('${apiUrl!}/${ApiConstants.baseUrl}/refresh-token'),
-          headers: {
-            "Content-Type": ApiConstants.applicationContentType,
-            "TenantId": tenantId!,
-            "Authorization": "Bearer $accessToken"
-          },
-          body: jsonEncode(refreshTokenModel.toJson()));
+    final response = await http.post(
+        Uri.parse('${apiUrl!}/${ApiConstants.baseUrl}/refresh-token'),
+        headers: {
+          "Content-Type": ApiConstants.applicationContentType,
+          "TenantId": tenantId!,
+          "Authorization": "Bearer $accessToken"
+        },
+        body: jsonEncode(refreshTokenModel.toJson()));
 
-      if (response.statusCode == HttpStatus.ok) {
-        LoginResponseModel loginData = LoginResponseModel.fromJson(
-            jsonDecode(response.body) as Map<String, dynamic>);
+    if (response.statusCode == HttpStatus.ok) {
+      LoginResponseModel loginData = LoginResponseModel.fromJson(
+          jsonDecode(response.body) as Map<String, dynamic>);
 
-        StorageService.saveLoginData(loginData);
-      } else {
-        throw Exception('Erro ao realizar o refresh token');
-      }
-    } catch (exception) {
-      print(exception);
+      StorageService.saveLoginData(loginData);
+    } else {
+      throw Exception('Erro ao realizar o refresh token');
     }
   }
 }
