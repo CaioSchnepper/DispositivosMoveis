@@ -10,7 +10,7 @@ class OpenGateWidget extends StatelessWidget {
     return Center(
       child: Column(children: <Widget>[
         Center(
-          child: Image.asset('lib/assets/images/comandos.gif'),
+          child: Image.asset('lib/assets/images/gate/gate-full.png'),
         ),
         const Text('Levante a cancela para abrir o portão.')
       ]),
