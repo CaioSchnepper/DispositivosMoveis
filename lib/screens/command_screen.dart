@@ -36,7 +36,7 @@ class _CommandScreenState extends State<CommandScreen> {
             ),
           ),
           _commandAbrirPortao != null
-              ? OpenGateWidget(onPressed: _openGate)
+              ? const OpenGateWidget()
               : Center(
                   child: Column(
                     children: <Widget>[
@@ -68,8 +68,6 @@ class _CommandScreenState extends State<CommandScreen> {
       ),
     );
   }
-
-  void _openGate() {}
 
   void _fetchCommands() async {
     List<AutomationModel> automations =
