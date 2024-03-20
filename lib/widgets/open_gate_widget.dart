@@ -56,6 +56,9 @@ class _OpenGateWidgetState extends State<OpenGateWidget> {
 
     if (touchPositionFromCenter.direction < angleToTrigger) {
       SnackBarHelper.show(context, 'Abrindo portão hehe');
+      setState(() {
+        currentAngle = 0.0;
+      });
       return;
     }
 
