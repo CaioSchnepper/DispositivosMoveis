@@ -3,7 +3,13 @@ class AutomationModel {
   int idIntegracao = 0;
   String nome = "";
 
-  AutomationModel();
+  AutomationModel(this.comandos, this.idIntegracao, this.nome);
+
+  AutomationModel.from(AutomationModel automation) {
+    comandos = automation.comandos;
+    idIntegracao = automation.idIntegracao;
+    nome = automation.nome;
+  }
 
   AutomationModel.fromJson(Map<String, dynamic> json)
       : comandos = toComandosList(json['comandos']),
@@ -34,4 +40,18 @@ class ComandoModel {
         status = json['status'],
         valorComando = json['valorComando'],
         enumAcao = json['enumAcao'];
+}
+
+class ComandoSendModel {
+  final int comandoId;
+  final int integracaoId;
+  final String? zona;
+
+  ComandoSendModel(
+      {required this.comandoId,
+      required this.integracaoId,
+      required this.zona});
+
+  Map<String, dynamic> toJson() =>
+      {'comandoId': comandoId, 'integracaoId': integracaoId, 'zona': zona};
 }

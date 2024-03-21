@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:app_do_portao/models/automation_model.dart';
 import 'package:app_do_portao/models/patrimony_model.dart';
+import 'package:app_do_portao/services/automation_service.dart';
+import 'package:app_do_portao/utils/helpers/automations_helper.dart';
 import 'package:app_do_portao/utils/helpers/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -91,7 +93,7 @@ class _OpenGateWidgetState extends State<OpenGateWidget> {
     _panEndTriggered = true;
 
     if (_currentAngle < _angleToTrigger) {
-      SnackBarHelper.show(context, 'Abrindo o portão hehe');
+      _sendCommand();
       _gateTriggeredSoftly = false;
     } else {
       _gateTriggeredSoftly = true;
@@ -116,6 +118,20 @@ class _OpenGateWidgetState extends State<OpenGateWidget> {
   }
 
   bool _isInvalidAngle(double angle) => angle < _maxAngle || angle > 0;
+
+  Future<void> _sendCommand() async {
+    ComandoModel openGateCommand = widget.automation.comandos.firstWhere(
+        (command) => AutomationsHelper.commandContainsPortao(command.nome));
+
+    ComandoSendModel commandToSend = ComandoSendModel(
+        comandoId: openGateCommand.idComando,
+        integracaoId: widget.automation.idIntegracao,
+        zona: null);
+
+    await AutomationService.sendCommand(widget.cliente.idUnico, commandToSend);
+
+    SnackBarHelper.show(context, "Comandinho de abrir portão enviado.");
+  }
 
   @override
   void dispose() {

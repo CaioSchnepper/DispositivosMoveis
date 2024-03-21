@@ -1,5 +1,8 @@
 import 'package:app_do_portao/models/automation_model.dart';
 import 'package:app_do_portao/models/patrimony_model.dart';
+import 'package:app_do_portao/services/automation_service.dart';
+import 'package:app_do_portao/utils/constants/acao_enum.dart';
+import 'package:app_do_portao/utils/helpers/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
@@ -38,20 +41,32 @@ class _ArmDisarmWidgetState extends State<ArmDisarmWidget> {
                 //sliderButtonIcon: const Icon(Icons.lock),
                 animationDuration: const Duration(milliseconds: 500),
                 text: command.nome,
-                textStyle: const TextStyle(
-                  color: Colors.white,
-                ),
-                onSubmit: () {
-                  Future.delayed(
-                    const Duration(seconds: 1),
-                    () => {},
-                  );
-                  return null;
-                },
+                textStyle: Theme.of(context).primaryTextTheme.bodyLarge,
+                //innerColor: Theme.of(context),
+                outerColor: Theme.of(context).primaryColor,
+                onSubmit: () => _sendCommand(command),
               ),
             ),
         ],
       ),
     );
+  }
+
+  Future<void> _sendCommand(ComandoModel command) async {
+    switch (command.enumAcao) {
+      case EnumAcao.armar:
+        await AutomationService.removeActivation(widget.cliente.idUnico);
+        SnackBarHelper.show(context, "Comandinho de armar enviado.");
+        return;
+
+      case EnumAcao.desarmar:
+        await AutomationService.removeDeactivation(widget.cliente.idUnico);
+        SnackBarHelper.show(context, "Comandinho de desarmar enviado.");
+        return;
+
+      case EnumAcao.inibirZonas:
+        SnackBarHelper.show(context, "Comandinho não suportado ainda hehe");
+        return;
+    }
   }
 }

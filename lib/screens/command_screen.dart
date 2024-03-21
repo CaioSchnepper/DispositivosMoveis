@@ -1,7 +1,8 @@
 import 'package:app_do_portao/models/automation_model.dart';
 import 'package:app_do_portao/models/patrimony_model.dart';
 import 'package:app_do_portao/services/automation_service.dart';
-import 'package:app_do_portao/utils/enums/acao_enum.dart';
+import 'package:app_do_portao/utils/constants/acao_enum.dart';
+import 'package:app_do_portao/utils/helpers/automations_helper.dart';
 import 'package:app_do_portao/widgets/arm_disarm_widget.dart';
 import 'package:app_do_portao/widgets/open_gate_widget.dart';
 import 'package:flutter/material.dart';
@@ -51,38 +52,30 @@ class _CommandScreenState extends State<CommandScreen> {
     List<AutomationModel> automations =
         await AutomationService.fetchAutomations(widget.cliente.idUnico);
 
-    int abrirPortaoIndex = automations.indexWhere((automation) => automation
-        .comandos
-        .any((command) => _commandContainsPortao(command.nome)));
+    int abrirPortaoIndex = automations.indexWhere((automation) =>
+        automation.comandos.any((command) =>
+            AutomationsHelper.commandContainsPortao(command.nome)));
+
+    List<AutomationModel> automationsWithSupportedCommands =
+        List<AutomationModel>.empty(growable: true);
 
     for (var automation in automations) {
-      automation.comandos = automation.comandos
-          .where((comando) => _commandIsSupported(comando))
+      List<ComandoModel> newCommands = automation.comandos
+          .where((comando) => AutomationsHelper.commandIsSupported(comando))
           .toList();
+
+      AutomationModel newAutomation = AutomationModel(
+          newCommands, automation.idIntegracao, automation.nome);
+
+      automationsWithSupportedCommands.add(newAutomation);
     }
 
     setState(() {
-      _automations = automations;
+      _automations = automationsWithSupportedCommands;
 
       if (abrirPortaoIndex >= 0) {
         _automationAbrirPortao = automations[abrirPortaoIndex];
       }
     });
-  }
-
-  bool _commandContainsPortao(String nome) {
-    const String portaoWithTilde = "Portão";
-    const String portaoWithoutTilde = "Portao";
-
-    return nome.contains(portaoWithTilde) ||
-        nome.contains(portaoWithTilde.toLowerCase()) ||
-        nome.contains(portaoWithoutTilde) ||
-        nome.contains(portaoWithoutTilde.toLowerCase());
-  }
-
-  bool _commandIsSupported(ComandoModel comando) {
-    return comando.enumAcao == EnumAcao.armar.value ||
-        comando.enumAcao == EnumAcao.desarmar.value ||
-        comando.enumAcao == EnumAcao.inibirZonas.value;
   }
 }
