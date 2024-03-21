@@ -38,7 +38,7 @@ class _CommandScreenState extends State<CommandScreen> {
           _commandAbrirPortao != null
               ? const OpenGateWidget()
               : ArmDisarmWidget(
-                  cliente: widget.cliente, automations: _automations),
+                  cliente: widget.cliente, automation: _automations.firstOrNull),
         ],
       ),
     );

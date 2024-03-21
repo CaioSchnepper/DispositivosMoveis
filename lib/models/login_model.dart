@@ -1,5 +1,4 @@
 import 'package:app_do_portao/models/permissions_model.dart';
-import 'package:uuid/uuid.dart';
 
 class LoginModel {
   final String applicationId;
