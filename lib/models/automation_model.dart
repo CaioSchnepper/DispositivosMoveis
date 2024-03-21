@@ -21,7 +21,7 @@ class ComandoModel {
   int idInterface;
   int indIconeComando;
   String nome;
-  int status;
+  int? status;
   String valorComando;
   int enumAcao;
 

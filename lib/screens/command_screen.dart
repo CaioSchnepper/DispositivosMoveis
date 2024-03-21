@@ -1,13 +1,13 @@
 import 'package:app_do_portao/models/automation_model.dart';
 import 'package:app_do_portao/models/patrimony_model.dart';
 import 'package:app_do_portao/services/automation_service.dart';
+import 'package:app_do_portao/widgets/arm_disarm_widget.dart';
 import 'package:app_do_portao/widgets/open_gate_widget.dart';
 import 'package:flutter/material.dart';
 
 class CommandScreen extends StatefulWidget {
   const CommandScreen({super.key, required this.cliente});
 
-  final String title = 'Login';
   final ClienteModel cliente;
 
   @override
@@ -37,33 +37,8 @@ class _CommandScreenState extends State<CommandScreen> {
           ),
           _commandAbrirPortao != null
               ? const OpenGateWidget()
-              : Center(
-                  child: Column(
-                    children: <Widget>[
-                      for (var automation in _automations)
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          margin: const EdgeInsets.symmetric(vertical: 2),
-                          child: Card(
-                            child: ListTile(
-                              leading: const Icon(
-                                Icons.location_city,
-                                size: 40,
-                              ),
-                              title: Text(automation.comandos.first.nome),
-                              subtitle: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(automation.comandos.first.valorComando),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
+              : ArmDisarmWidget(
+                  cliente: widget.cliente, automations: _automations),
         ],
       ),
     );
