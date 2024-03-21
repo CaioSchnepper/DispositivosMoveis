@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_do_portao/utils/helpers/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -9,9 +11,14 @@ class OpenGateWidget extends StatefulWidget {
 }
 
 class _OpenGateWidgetState extends State<OpenGateWidget> {
-  static const double maxAngle = -1.5;
-  static const double angleToTrigger = -1.2;
-  double currentAngle = 0.0;
+  static const double _maxAngle = -1.5;
+  static const double _angleToTrigger = -1.2;
+
+  Timer? _timer;
+  double _currentAngle = 0.0;
+
+  bool _panEndTriggered = false;
+  bool _gateTriggeredSoftly = false;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +31,11 @@ class _OpenGateWidgetState extends State<OpenGateWidget> {
               Image.asset("lib/assets/images/gate/gate-no-bar.png"),
               GestureDetector(
                 onPanUpdate: _onPanUpdateHandler,
+                onPanEnd: _onPanEndHandler,
                 child: SizedBox(
                   width: 270,
                   child: Transform.rotate(
-                    angle: currentAngle,
+                    angle: _currentAngle,
                     origin: const Offset(24, 0),
                     alignment: Alignment.centerLeft,
                     child: Center(
@@ -38,9 +46,15 @@ class _OpenGateWidgetState extends State<OpenGateWidget> {
               ),
             ],
           ),
-          Text(
-            "Levante a cancela para abrir o portão.",
-            style: Theme.of(context).textTheme.bodyLarge,
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              _gateTriggeredSoftly
+                  ? "Levante a cancela QUE NEM GENTE para abrir o portão."
+                  : "Levante a cancela para abrir o portão.",
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),
@@ -50,22 +64,49 @@ class _OpenGateWidgetState extends State<OpenGateWidget> {
   void _onPanUpdateHandler(DragUpdateDetails details) {
     final touchPositionFromCenter = details.localPosition;
 
-    if (_isInvalidAngle(touchPositionFromCenter.direction)) {
-      return;
-    }
-
-    if (touchPositionFromCenter.direction < angleToTrigger) {
-      SnackBarHelper.show(context, 'Abrindo portão hehe');
-      setState(() {
-        currentAngle = 0.0;
-      });
+    if (_panEndTriggered == true ||
+        _isInvalidAngle(touchPositionFromCenter.direction)) {
       return;
     }
 
     setState(() {
-      currentAngle = touchPositionFromCenter.direction;
+      _currentAngle = touchPositionFromCenter.direction;
     });
   }
 
-  bool _isInvalidAngle(double angle) => angle < maxAngle || angle > 0;
+  void _onPanEndHandler(DragEndDetails details) {
+    _panEndTriggered = true;
+
+    if (_currentAngle < _angleToTrigger) {
+      SnackBarHelper.show(context, 'Abrindo o portão hehe');
+      _gateTriggeredSoftly = false;
+    } else {
+      _gateTriggeredSoftly = true;
+    }
+
+    const double angleIncrement = 0.05;
+
+    _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
+      if (_currentAngle <= 0) {
+        double newAngle = _currentAngle + angleIncrement;
+        setState(() {
+          _currentAngle = newAngle;
+        });
+      } else {
+        _panEndTriggered = false;
+        _timer?.cancel();
+        setState(() {
+          _currentAngle = 0.0;
+        });
+      }
+    });
+  }
+
+  bool _isInvalidAngle(double angle) => angle < _maxAngle || angle > 0;
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 }
