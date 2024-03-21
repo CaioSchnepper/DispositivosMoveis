@@ -103,5 +103,4 @@ flutter:
     - lib/assets/images/patrimonio.gif
     - lib/assets/images/comandos.gif
     - lib/assets/images/gate/gate-bar.png
-    - lib/assets/images/gate/gate-full.png
     - lib/assets/images/gate/gate-no-bar.png
