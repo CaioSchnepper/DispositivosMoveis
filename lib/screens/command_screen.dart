@@ -1,6 +1,7 @@
 import 'package:app_do_portao/models/automation_model.dart';
 import 'package:app_do_portao/models/patrimony_model.dart';
 import 'package:app_do_portao/services/automation_service.dart';
+import 'package:app_do_portao/utils/enums/acao_enum.dart';
 import 'package:app_do_portao/widgets/arm_disarm_widget.dart';
 import 'package:app_do_portao/widgets/open_gate_widget.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,8 @@ class CommandScreen extends StatefulWidget {
 }
 
 class _CommandScreenState extends State<CommandScreen> {
-  List<AutomationModel> _automations = List.empty();
-  AutomationModel? _commandAbrirPortao;
+  List<AutomationModel> _automations = List<AutomationModel>.empty();
+  AutomationModel? _automationAbrirPortao;
 
   @override
   void initState() {
@@ -35,10 +36,12 @@ class _CommandScreenState extends State<CommandScreen> {
               child: Image.asset('lib/assets/images/comandos.gif'),
             ),
           ),
-          _commandAbrirPortao != null
-              ? const OpenGateWidget()
+          _automationAbrirPortao != null
+              ? OpenGateWidget(
+                  cliente: widget.cliente, automation: _automationAbrirPortao!)
               : ArmDisarmWidget(
-                  cliente: widget.cliente, automation: _automations.firstOrNull),
+                  cliente: widget.cliente,
+                  automation: _automations.firstOrNull),
         ],
       ),
     );
@@ -52,11 +55,17 @@ class _CommandScreenState extends State<CommandScreen> {
         .comandos
         .any((command) => _commandContainsPortao(command.nome)));
 
+    for (var automation in automations) {
+      automation.comandos = automation.comandos
+          .where((comando) => _commandIsSupported(comando))
+          .toList();
+    }
+
     setState(() {
       _automations = automations;
 
       if (abrirPortaoIndex >= 0) {
-        _commandAbrirPortao = automations[abrirPortaoIndex];
+        _automationAbrirPortao = automations[abrirPortaoIndex];
       }
     });
   }
@@ -69,5 +78,11 @@ class _CommandScreenState extends State<CommandScreen> {
         nome.contains(portaoWithTilde.toLowerCase()) ||
         nome.contains(portaoWithoutTilde) ||
         nome.contains(portaoWithoutTilde.toLowerCase());
+  }
+
+  bool _commandIsSupported(ComandoModel comando) {
+    return comando.enumAcao == EnumAcao.armar.value ||
+        comando.enumAcao == EnumAcao.desarmar.value ||
+        comando.enumAcao == EnumAcao.inibirZonas.value;
   }
 }

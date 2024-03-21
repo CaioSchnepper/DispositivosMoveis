@@ -20,28 +20,33 @@ class _ArmDisarmWidgetState extends State<ArmDisarmWidget> {
     return Center(
       child: Column(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              "Deslize para enviar o comando.",
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+          ),
           for (var command
               in widget.automation?.comandos ?? List<ComandoModel>.empty())
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: SlideAction(
+                sliderRotate: false,
                 //sliderButtonIcon: const Icon(Icons.lock),
-                submittedIcon: const Icon(
-                  Icons.done_all,
+                animationDuration: const Duration(milliseconds: 500),
+                text: command.nome,
+                textStyle: const TextStyle(
                   color: Colors.white,
-                ),
-                child: Text(
-                  command.nome,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
                 ),
                 onSubmit: () {
                   Future.delayed(
-                    Duration(seconds: 1),
+                    const Duration(seconds: 1),
                     () => {},
                   );
+                  return null;
                 },
               ),
             ),

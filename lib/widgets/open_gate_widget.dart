@@ -1,10 +1,16 @@
 import 'dart:async';
 
+import 'package:app_do_portao/models/automation_model.dart';
+import 'package:app_do_portao/models/patrimony_model.dart';
 import 'package:app_do_portao/utils/helpers/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 
 class OpenGateWidget extends StatefulWidget {
-  const OpenGateWidget({super.key});
+  const OpenGateWidget(
+      {super.key, required this.cliente, required this.automation});
+
+  final ClienteModel cliente;
+  final AutomationModel automation;
 
   @override
   State<OpenGateWidget> createState() => _OpenGateWidgetState();
@@ -23,44 +29,47 @@ class _OpenGateWidgetState extends State<OpenGateWidget> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: <Widget>[
-          Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Image.asset("lib/assets/images/gate/gate-no-bar.png"),
-              GestureDetector(
-                onPanUpdate: _onPanUpdateHandler,
-                onPanEnd: _onPanEndHandler,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 38, bottom: 40),
-                  child: SizedBox(
-                    width: 300,
-                    child: Transform.rotate(
-                      angle: _currentAngle,
-                      origin: const Offset(27, 0),
-                      alignment: Alignment.centerLeft,
-                      child: Center(
-                        child:
-                            Image.asset("lib/assets/images/gate/gate-bar.png"),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 40),
+        child: Column(
+          children: <Widget>[
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Image.asset("lib/assets/images/gate/gate-no-bar.png"),
+                GestureDetector(
+                  onPanUpdate: _onPanUpdateHandler,
+                  onPanEnd: _onPanEndHandler,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 38, bottom: 40),
+                    child: SizedBox(
+                      width: 300,
+                      child: Transform.rotate(
+                        angle: _currentAngle,
+                        origin: const Offset(27, 0),
+                        alignment: Alignment.centerLeft,
+                        child: Center(
+                          child: Image.asset(
+                              "lib/assets/images/gate/gate-bar.png"),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Text(
-              _gateTriggeredSoftly
-                  ? "Levante a cancela QUE NEM GENTE para abrir o portão."
-                  : "Levante a cancela para abrir o portão.",
-              style: Theme.of(context).textTheme.bodyLarge,
-              textAlign: TextAlign.center,
+              ],
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                _gateTriggeredSoftly
+                    ? "Levante a cancela QUE NEM GENTE para abrir o portão."
+                    : "Levante a cancela para abrir o portão.",
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
