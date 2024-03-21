@@ -12,7 +12,7 @@ class OpenGateWidget extends StatefulWidget {
 
 class _OpenGateWidgetState extends State<OpenGateWidget> {
   static const double _maxAngle = -1.5;
-  static const double _angleToTrigger = -1.2;
+  static const double _angleToTrigger = -1.1;
 
   Timer? _timer;
   double _currentAngle = 0.0;
@@ -32,14 +32,18 @@ class _OpenGateWidgetState extends State<OpenGateWidget> {
               GestureDetector(
                 onPanUpdate: _onPanUpdateHandler,
                 onPanEnd: _onPanEndHandler,
-                child: SizedBox(
-                  width: 270,
-                  child: Transform.rotate(
-                    angle: _currentAngle,
-                    origin: const Offset(24, 0),
-                    alignment: Alignment.centerLeft,
-                    child: Center(
-                      child: Image.asset("lib/assets/images/gate/gate-bar.png"),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 38, bottom: 40),
+                  child: SizedBox(
+                    width: 300,
+                    child: Transform.rotate(
+                      angle: _currentAngle,
+                      origin: const Offset(27, 0),
+                      alignment: Alignment.centerLeft,
+                      child: Center(
+                        child:
+                            Image.asset("lib/assets/images/gate/gate-bar.png"),
+                      ),
                     ),
                   ),
                 ),
