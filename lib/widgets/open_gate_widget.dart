@@ -128,9 +128,14 @@ class _OpenGateWidgetState extends State<OpenGateWidget> {
         integracaoId: widget.automation.idIntegracao,
         zona: null);
 
-    await AutomationService.sendCommand(widget.cliente.idUnico, commandToSend);
+    try {
+      await AutomationService.sendCommand(
+          widget.cliente.idUnico, commandToSend);
 
-    SnackBarHelper.show(context, "Comandinho de abrir portão enviado.");
+      SnackBarHelper.show(context, "Comandinho de abrir portão enviado.");
+    } catch (exception) {
+      SnackBarHelper.show(context, "Erro ao enviar comando, tente novamente.");
+    }
   }
 
   @override
