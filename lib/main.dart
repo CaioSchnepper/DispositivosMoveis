@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_do_portao/models/login_model.dart';
 import 'package:app_do_portao/models/qrcode_model.dart';
 import 'package:app_do_portao/screens/login_screen.dart';
@@ -39,10 +41,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  double _opacityText1 = 0;
+  double _opacityText2 = 0;
+  double _opacityButton = 0;
+
   @override
   void initState() {
     super.initState();
     _checkSavedData();
+    _timersForOpacity();
   }
 
   _checkSavedData() async {
@@ -53,11 +60,30 @@ class _HomePageState extends State<HomePage> {
     }
 
     QRCodeModel? qrCodeData = await StorageService.getQRCodeData();
-
     if (qrCodeData != null) {
       _navigateToLoginScreen();
       return;
     }
+  }
+
+  void _timersForOpacity() {
+    Timer(const Duration(milliseconds: 500), () {
+      setState(() {
+        _opacityText1 = 1;
+      });
+    });
+
+    Timer(const Duration(milliseconds: 2000), () {
+      setState(() {
+        _opacityText2 = 1;
+      });
+    });
+
+    Timer(const Duration(milliseconds: 4000), () {
+      setState(() {
+        _opacityButton = 1;
+      });
+    });
   }
 
   @override
@@ -67,26 +93,38 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                'Olá',
-                style: Theme.of(context).textTheme.headlineMedium,
-                textAlign: TextAlign.center,
+            AnimatedOpacity(
+              opacity: _opacityText1,
+              duration: const Duration(seconds: 2),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  'Olá',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                'Por favor, pressione o botão abaixo e escaneie o QR Code fornecido para ter acesso ao App do portão',
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.center,
+            AnimatedOpacity(
+              opacity: _opacityText2,
+              duration: const Duration(seconds: 2),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  'Por favor, pressione o botão abaixo e escaneie o QR Code fornecido para ter acesso ao App do portão',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-            FilledButton(
-              onPressed: _navigateToQRCodeScanner,
-              child: const Text('Abrir câmera'),
-            )
+            AnimatedOpacity(
+              opacity: _opacityButton,
+              duration: const Duration(seconds: 2),
+              child: FilledButton(
+                onPressed: _navigateToQRCodeScanner,
+                child: const Text('Abrir câmera'),
+              ),
+            ),
           ],
         ),
       ),
