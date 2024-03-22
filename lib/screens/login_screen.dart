@@ -82,13 +82,9 @@ class _LoginScreenState extends State<LoginScreen> {
       StorageService.saveLoginData(login);
       _navigateToPatrimonyScreen();
     } catch (exception) {
-      _showSnackBar(
+      SnackBarHelper.show(context,
           'Erro ao realizar login. O que aconteceu nós nunca saberemos.');
     }
-  }
-
-  _showSnackBar(String text) {
-    SnackBarHelper.show(context, text);
   }
 
   _navigateToPatrimonyScreen() {

@@ -1,8 +1,8 @@
 import 'package:app_do_portao/models/automation_model.dart';
 import 'package:app_do_portao/models/patrimony_model.dart';
 import 'package:app_do_portao/services/automation_service.dart';
-import 'package:app_do_portao/utils/constants/acao_enum.dart';
 import 'package:app_do_portao/utils/helpers/automations_helper.dart';
+import 'package:app_do_portao/utils/helpers/snackbar_helper.dart';
 import 'package:app_do_portao/widgets/arm_disarm_widget.dart';
 import 'package:app_do_portao/widgets/open_gate_widget.dart';
 import 'package:flutter/material.dart';
@@ -49,8 +49,14 @@ class _CommandScreenState extends State<CommandScreen> {
   }
 
   void _fetchCommands() async {
-    List<AutomationModel> automations =
-        await AutomationService.fetchAutomations(widget.cliente.idUnico);
+    List<AutomationModel> automations = List<AutomationModel>.empty();
+    try {
+      automations =
+          await AutomationService.fetchAutomations(widget.cliente.idUnico);
+    } catch (exception) {
+      SnackBarHelper.show(context, "Erro ao buscar automações");
+      return;
+    }
 
     int abrirPortaoIndex = automations.indexWhere((automation) =>
         automation.comandos.any((command) =>

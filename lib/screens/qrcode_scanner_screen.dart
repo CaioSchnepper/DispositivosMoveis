@@ -89,7 +89,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
 
       _navigateToLoginScreen();
     } catch (exception) {
-      _showSnackBar('QR Code inválido');
+      SnackBarHelper.show(context, 'QR Code inválido');
       qrViewController!.resumeCamera();
     }
   }
@@ -99,10 +99,6 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       context,
       MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
-  }
-
-  void _showSnackBar(String text) {
-    SnackBarHelper.show(context, text);
   }
 
   @override

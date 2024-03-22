@@ -1,6 +1,7 @@
 import 'package:app_do_portao/models/patrimony_model.dart';
 import 'package:app_do_portao/screens/command_screen.dart';
 import 'package:app_do_portao/services/patrimony_service.dart';
+import 'package:app_do_portao/utils/helpers/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 
 class PatrimonyScreen extends StatefulWidget {
@@ -71,7 +72,14 @@ class _PatrimonyScreenState extends State<PatrimonyScreen> {
   }
 
   void _fetchPatrimonies() async {
-    PatrimonyModel patrimonies = await PatrimonyService.fetchPatrimonies();
+    PatrimonyModel patrimonies = PatrimonyModel();
+
+    try {
+      patrimonies = await PatrimonyService.fetchPatrimonies();
+    } catch (exception) {
+      SnackBarHelper.show(context, "Erro ao buscar patrimônios");
+      return;
+    }
 
     setState(() {
       _patrimonies = patrimonies;
