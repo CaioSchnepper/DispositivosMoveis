@@ -122,6 +122,12 @@ class _HomePageState extends State<HomePage> {
               duration: const Duration(seconds: 2),
               child: FilledButton(
                 onPressed: _navigateToQRCodeScanner,
+                style: ButtonStyle(
+                    textStyle: MaterialStatePropertyAll(TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.bodyLarge?.fontSize)),
+                    elevation: const MaterialStatePropertyAll(4),
+                    minimumSize: const MaterialStatePropertyAll(Size(200, 50))),
                 child: const Text('Abrir câmera'),
               ),
             ),

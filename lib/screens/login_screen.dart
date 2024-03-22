@@ -45,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextFormField(
                     controller: userController,
                     decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
                       labelText: 'Informe seu usuário',
                     ),
                     inputFormatters: [maskFormatter]),
@@ -56,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
                     labelText: 'Informe a senha',
                   ),
                 ),
@@ -63,6 +65,13 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: FilledButton(
+                  style: ButtonStyle(
+                      textStyle: MaterialStatePropertyAll(TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.bodyLarge?.fontSize)),
+                      elevation: const MaterialStatePropertyAll(4),
+                      minimumSize:
+                          const MaterialStatePropertyAll(Size(200, 50))),
                   onPressed: () => _login(),
                   child: const Text('Login'),
                 ),
