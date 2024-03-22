@@ -27,51 +27,50 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: <Widget>[
-        Container(
-          height: 400.0,
-          width: 250.0,
-          padding: const EdgeInsets.only(top: 10),
-          child: Center(
-            child: Image.asset('lib/assets/images/robot-dance.gif'),
-          ),
-        ),
-        Text(
-          'Usuário',
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: TextFormField(
-              controller: userController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Informe seu usuário',
+      body: ListView(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Container(
+                height: 400.0,
+                width: 350.0,
+                padding: const EdgeInsets.only(top: 10),
+                child: Center(
+                  child: Image.asset('lib/assets/images/robot-dance.gif'),
+                ),
               ),
-              inputFormatters: [maskFormatter]),
-        ),
-        Text(
-          'Senha',
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: TextFormField(
-            controller: passwordController,
-            obscureText: true,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Informa a senha',
-            ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: TextFormField(
+                    controller: userController,
+                    decoration: const InputDecoration(
+                      labelText: 'Informe seu usuário',
+                    ),
+                    inputFormatters: [maskFormatter]),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: TextFormField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Informe a senha',
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: FilledButton(
+                  onPressed: () => _login(),
+                  child: const Text('Login'),
+                ),
+              ),
+            ],
           ),
-        ),
-        FilledButton(
-          onPressed: () {
-            _login();
-          },
-          child: const Text('Login'),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 
