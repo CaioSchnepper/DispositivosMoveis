@@ -2,6 +2,10 @@
 
 A new Flutter project.
 
+Desenvolvido por Caio Schnepper
+
+Comando para rodar o projeto: flutter run
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
